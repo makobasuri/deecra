@@ -1,3 +1,1 @@
-import { test } from './module.js';
-
-test();
+const canvas = document.getElementById('canvas');
