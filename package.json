@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "live-server --port=8050 --entry-file=index.html",
+    "start": "nodemon ./server.js localhost 8050",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "marko bajkovic",
   "license": "MIT",
   "dependencies": {
-    "live-server": "^1.2.0"
+    "express": "^4.16.3",
+    "nodemon": "^1.17.5",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "chokidar": "^2.0.3"
   }
 }
