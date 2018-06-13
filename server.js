@@ -9,9 +9,9 @@ app.use(express.static(__dirname + '/public', {'fallthrough': false}));
 
 app.get('/', (req, res) => res.sendFile(__dirname + '/public/index.html'));
 
-server.listen(8011, () => console.log(`listening on ${server.address().port}`));
+server.listen(8010, () => console.log(`listening on ${server.address().port}`));
 
-serveDev.listen(8012, () => console.log(`listening on ${server.address().port}`));
+serveDev.listen(8013, () => console.log(`listening on ${server.address().port}`));
 
 io.on('connection',function (client) {
 	console.log("Socket connection is ON!");
