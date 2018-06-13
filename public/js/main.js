@@ -12,4 +12,8 @@ function loadImage(url) {
 }
 
 loadImage('/tiles/DungeonCrawl_ProjectUtumnoTileset.png')
-	.then(image => ctx.drawImage(image, 0, 0, 100, 100, 20, 30, 100, 100))
+	.then(image => ctx.drawImage(
+		image,
+		704, 416, 32, 32,
+		0, 0, 32, 32
+	))
