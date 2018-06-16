@@ -7,3 +7,8 @@ export function loadTileset(url) {
 		image.src = url;
 	});
 }
+
+export function loadLevel(name) {
+	return fetch(`/levels/${name}.json`)
+		.then(result => result.json())
+}

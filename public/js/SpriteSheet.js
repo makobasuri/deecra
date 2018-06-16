@@ -27,12 +27,15 @@ export default class SpriteSheet {
 	}
 
 	draw(name, context, x, y) {
-		console.log(this.tiles.get(name))
 		context.drawImage(
 			this.tiles.get(name),
 			x,
 			y
 		)
 		return this
+	}
+
+	drawTile(name, context, x, y) {
+		this.draw(name, context, x * this.width, y * this.height)
 	}
 }
