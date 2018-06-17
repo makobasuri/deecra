@@ -1,18 +1,10 @@
+import STATE from './STATE.js'
 import { loadTiles } from './loadTiles.js';
 import { loadLevel } from './loaders.js';
+import { drawLayers, createBgLayer, createSpriteLayer } from './layers.js'
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-
-function drawBackground(background, context, sprites) {
-	background.ranges.map(([x1, x2, y1, y2]) => {
-		for (let x = x1; x < x2; x++) {
-			for (let y = y1; y < y2; y++) {
-				sprites.drawTile(background.tile, context, x, y);
-			}
-		}
-	})
-}
 
 Promise.all([
 	loadTiles(),
@@ -21,6 +13,23 @@ Promise.all([
 	sprites,
 	lvl
 ]) => {
-	lvl.backgrounds.map(bg => drawBackground(bg, ctx, sprites))
-	sprites.drawTile('char', ctx, 8, 2)
+	const backgroundLayer = createBgLayer(lvl.backgrounds, sprites)
+	STATE.layers.push(backgroundLayer)
+
+	const pos = {
+		x: 164,
+		y: 32
+	}
+
+	const spriteLayer = createSpriteLayer(sprites, pos)
+	STATE.layers.push(spriteLayer)
+
+	function update() {
+		drawLayers(ctx)
+
+		pos.x--
+		requestAnimationFrame(update)
+	}
+
+	update()
 })
