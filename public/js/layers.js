@@ -7,7 +7,7 @@ export function drawLayers(context) {
 
 export function createSpriteLayer(sprites, pos) {
 	return function drawSpriteLayer(context) {
-		sprites.draw('idle', context, pos.x, pos.y, 27, 45)
+		sprites.draw('idle', context, pos.x, pos.y)
 	}
 }
 
