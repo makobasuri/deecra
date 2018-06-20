@@ -20,7 +20,7 @@ Promise.all([
 
 	const pos = {
 		x: 164,
-		y: 32
+		y: 16
 	}
 
 	const spriteLayer = createSpriteLayer(char, pos)

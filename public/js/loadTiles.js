@@ -15,9 +15,9 @@ export function loadLvlTiles() {
 export function loadCharacter() {
 	return loadTileset('/tiles/characters/steampunk_f10.png')
 		.then(image => {
-			const sprites = new SpriteSheet(image, 32, 46)
+			const sprites = new SpriteSheet(image, 27, 45)
 			console.log(sprites)
-			sprites.define('idle', 0, 0, 32, 46, 32, 32)
+			sprites.define('idle', 0, 0, 27, 45)
 			return sprites
 		})
 }
