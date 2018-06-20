@@ -8,30 +8,47 @@ export default class SpriteSheet {
 		this.tiles = new Map();
 	}
 
-	define(name, x, y) {
+	define(name, x, y, width, height, canWidth, canHeight) {
 		const buffer = createBuffer();
-		buffer.getContext('2d').drawImage(
+
+		(canWidth && canHeight)
+		? buffer.getContext('2d').drawImage(
 			this.image,
-			x * this.width,
-			y * this.height,
-			this.width,
-			this.height,
-			0,
-			0,
-			this.width,
-			this.height
-		);
+			x, y,
+			width, height,
+			0, 0,
+			canWidth, canHeight
+		)
+		: buffer.getContext('2d').drawImage(
+			this.image,
+			x, y,
+			width, height,
+			0, 0,
+			height, width
+		)
 		this.tiles.set(name, buffer);
 
 		return this
 	}
 
-	draw(name, context, x, y) {
-		context.drawImage(
-			this.tiles.get(name),
-			x,
-			y
+	defineTile(name, x, y) {
+		this.define(name, x * this.width, y * this.height, this.width, this.height)
+
+		return this;
+	}
+
+	draw(name, context, x, y, w, h) {
+		(w && h)
+		? context.drawImage(
+				this.tiles.get(name),
+				x, y,
+				w, h
 		)
+		: context.drawImage(
+				this.tiles.get(name),
+				x, y
+		)
+
 		return this
 	}
 
