@@ -1,5 +1,8 @@
 import STATE from './STATE.js'
-import { loadLvlTiles, loadCharacter } from './loadTiles.js';
+import Timer from './Timer.js'
+import Keyboard from './Keyboard.js'
+import { createCharacter } from './entities.js'
+import { loadLvlTiles } from './sprites.js';
 import { loadLevel } from './loaders.js';
 import { drawLayers, createBgLayer, createSpriteLayer } from './layers.js'
 
@@ -8,30 +11,35 @@ const ctx = canvas.getContext('2d');
 
 Promise.all([
 	loadLvlTiles(),
-	loadCharacter(),
+	createCharacter(),
 	loadLevel('dungeon-1')
 ]).then(([
 	sprites,
 	char,
 	lvl
 ]) => {
+	char.pos.set(164, 20)
+
+	const LEFT = ['ArrowLeft', 'KeyA']
+	const input = new Keyboard()
+	input.addMapping(
+		LEFT,
+		keyState => keyState ? char.go.start() : char.go.cancel()
+	)
+	input.listenTo(window)
+
 	const backgroundLayer = createBgLayer(lvl.backgrounds, sprites)
 	STATE.layers.push(backgroundLayer)
 
-	const pos = {
-		x: 164,
-		y: 16
-	}
-
-	const spriteLayer = createSpriteLayer(char, pos)
+	const spriteLayer = createSpriteLayer(char)
 	STATE.layers.push(spriteLayer)
 
-	function update() {
-		drawLayers(ctx)
+	const timer = new Timer()
 
-		//pos.x--
-		requestAnimationFrame(update)
+	timer.update = function update(deltaTime) {
+		char.update(deltaTime)
+		drawLayers(ctx)
 	}
 
-	update()
+	timer.start()
 })

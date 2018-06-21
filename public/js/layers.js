@@ -5,9 +5,9 @@ export function drawLayers(context) {
 	STATE.layers.map(layer => layer(context))
 }
 
-export function createSpriteLayer(sprites, pos) {
+export function createSpriteLayer(entity) {
 	return function drawSpriteLayer(context) {
-		sprites.draw('idle', context, pos.x, pos.y)
+		entity.draw(context)
 	}
 }
 
