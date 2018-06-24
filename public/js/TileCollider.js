@@ -17,18 +17,18 @@ export default class TileCollider {
 
 			if (
 				entity.vel.y > 0
-				&& entity.pos.y + entity.size.y > match.y1
+				&& entity.pos.y - entity.offset.y > match.y1
 			) {
-				entity.pos.y = match.y1 - entity.size.y
+				entity.pos.y = match.y1 + entity.size.y
 				entity.vel.y = 0
 				console.log('checkY1 is true')
 			}
 
 			if (
 				entity.vel.y < 0
-				&& entity.pos.y + entity.offset.y < match.y2
+				&& entity.pos.y - entity.offset.y + entity.pos.y <= match.y2
 			) {
-				entity.pos.y = match.y2
+				entity.pos.y = match.y2 - entity.offset.y
 				entity.vel.y = 0
 				console.log('checkY2 is true')
 			}

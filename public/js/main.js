@@ -16,15 +16,33 @@ Promise.all([
 	STATE
 ]) => {
 	STATE.addEntity(char)
-	char.pos.set(164, 20)
+	char.pos.set(164, 40)
 	char.size.set(27, 32)
 	char.offset.set(0, 12)
 
 	const LEFT = ['ArrowLeft', 'KeyA']
+	const RIGHT = ['ArrowRight', 'KeyD']
+	const UP = ['ArrowUp', 'KeyW']
+	const DOWN = ['ArrowDown', 'KeyS']
 	const input = new Keyboard()
 	input.addMapping(
 		LEFT,
-		keyState => keyState ? char.go.start() : char.go.cancel()
+		keyState => {
+			keyState ? char.go.start('left') : char.go.cancel('left')
+			console.log(keyState)
+		}
+	)
+	input.addMapping(
+		RIGHT,
+		keyState => keyState ? char.go.start('right') : char.go.cancel('right')
+	)
+	input.addMapping(
+		UP,
+		keyState => keyState ? char.go.start('up') : char.go.cancel('up')
+	)
+	input.addMapping(
+		DOWN,
+		keyState => keyState ? char.go.start('down') : char.go.cancel('down')
 	)
 	input.listenTo(window)
 
