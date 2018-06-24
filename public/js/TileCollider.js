@@ -6,15 +6,33 @@ export default class TileCollider {
 	}
 
 	checkY(entity) {
-		const match = this.tiles.matchByPosition(entity.pos.x, entity.pos.y)
+		const matches = this.tiles.searchByRange(
+			entity.pos.x, entity.pos.x + entity.size.x,
+			entity.pos.y, entity.pos.y + entity.size.y
+		)
 
-		if (!match) return
-		if (!match.tile.name.includes('wall')) return
+		matches.map(match => {
+			if (!match) return
+			if (!match.tile.name.includes('wall')) return
 
-		if (entity.vel.y > 0 && entity.pos.y > match.y1) {
-			entity.pos.y = match.y1
-			entity.vel.y = 0
-		}
+			if (
+				entity.vel.y > 0
+				&& entity.pos.y + entity.size.y > match.y1
+			) {
+				entity.pos.y = match.y1 - entity.size.y
+				entity.vel.y = 0
+				console.log('checkY1 is true')
+			}
+
+			if (
+				entity.vel.y < 0
+				&& entity.pos.y + entity.offset.y < match.y2
+			) {
+				entity.pos.y = match.y2
+				entity.vel.y = 0
+				console.log('checkY2 is true')
+			}
+		})
 	}
 
 	test(entity) {

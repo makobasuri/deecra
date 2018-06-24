@@ -37,12 +37,22 @@ export function createCollisionLayer(STATE) {
 	}
 
 	return function drawCollision(context) {
-		context.strokeStyle = 'blue'
 		resolvedTiles.map(({x, y}) => {
+			context.strokeStyle = 'blue'
 			context.beginPath()
 			context.rect(x * tileSize, y * tileSize, tileSize, tileSize)
 			context.stroke()
-			console.log(x, y)
+		})
+
+		STATE.entities.map(entity => {
+			context.strokeStyle = 'red'
+			context.beginPath()
+			context.rect(
+				entity.pos.x + entity.offset.x,
+				entity.pos.y + entity.offset.y,
+				entity.size.x, entity.size.y
+			)
+			context.stroke()
 		})
 
 		resolvedTiles.length = 0

@@ -17,6 +17,8 @@ Promise.all([
 ]) => {
 	STATE.addEntity(char)
 	char.pos.set(164, 20)
+	char.size.set(27, 32)
+	char.offset.set(0, 12)
 
 	const LEFT = ['ArrowLeft', 'KeyA']
 	const input = new Keyboard()
