@@ -1,4 +1,4 @@
-import Vec2 from './Vector2.js'
+import { Vec2 } from './structures.js'
 
 export class Trait {
 	constructor(name) {

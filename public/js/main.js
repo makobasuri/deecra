@@ -1,6 +1,7 @@
 import Timer from './Timer.js'
 import Keyboard from './Keyboard.js'
-import { createCharacter, updateEntities } from './entities.js'
+import { updateEntities } from './STATE.js'
+import { createCharacter } from './entities.js'
 import { loadLevel } from './loaders.js';
 import { drawLayers } from './layers.js'
 

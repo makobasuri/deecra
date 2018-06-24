@@ -1,12 +1,7 @@
-import STATE from './STATE.js'
 import Entity from './Entity.js'
 import Go from './traits/Go.js'
 import Velocity from './traits/Velocity.js';
 import { loadCharacter } from './sprites.js';
-
-export function updateEntities(deltaTime) {
-	STATE.entities.map(entity => entity.update(deltaTime))
-}
 
 export function createCharacter() {
 	return loadCharacter().then(sprite => {
