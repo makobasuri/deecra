@@ -1,5 +1,5 @@
 import Timer from './Timer.js'
-import Keyboard from './Keyboard.js'
+import { setupKeyboard } from './controls/setupKeyboard.js'
 import { updateEntities } from './STATE.js'
 import { createCharacter } from './entities.js'
 import { loadLevel } from './loaders.js';
@@ -20,30 +20,7 @@ Promise.all([
 	char.size.set(27, 32)
 	char.offset.set(0, 12)
 
-	const LEFT = ['ArrowLeft', 'KeyA']
-	const RIGHT = ['ArrowRight', 'KeyD']
-	const UP = ['ArrowUp', 'KeyW']
-	const DOWN = ['ArrowDown', 'KeyS']
-	const input = new Keyboard()
-	input.addMapping(
-		LEFT,
-		keyState => {
-			keyState ? char.go.start('left') : char.go.cancel('left')
-			console.log(keyState)
-		}
-	)
-	input.addMapping(
-		RIGHT,
-		keyState => keyState ? char.go.start('right') : char.go.cancel('right')
-	)
-	input.addMapping(
-		UP,
-		keyState => keyState ? char.go.start('up') : char.go.cancel('up')
-	)
-	input.addMapping(
-		DOWN,
-		keyState => keyState ? char.go.start('down') : char.go.cancel('down')
-	)
+	const input = setupKeyboard(char)
 	input.listenTo(window)
 
 	const timer = new Timer()

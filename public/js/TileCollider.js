@@ -5,10 +5,59 @@ export default class TileCollider {
 		this.tiles = new TileResolver(tileMatrix)
 	}
 
+	checkX(entity) {
+		let x;
+		if (entity.vel.x > 0) {
+			x = entity.pos.x + entity.size.x - entity.offset.x
+		} else if (entity.vel.x < 0) {
+			x = entity.pos.x
+		} else {
+			return
+		}
+
+		const matches = this.tiles.searchByRange(
+			x, x,
+			entity.pos.y + entity.offset.y,
+			entity.pos.y + entity.offset.y + entity.size.y
+		)
+
+		matches.map(match => {
+			if (!match) return
+			if (!match.tile.name.includes('wall')) return
+
+			if (
+				entity.vel.x > 0
+				&& entity.pos.x - entity.offset.x + entity.size.x > match.x1
+			) {
+				entity.pos.x = match.x1 - entity.size.x
+				entity.vel.x = 0
+				console.log('checkX1: ', match.x1, entity.pos.x)
+			}
+
+			if (
+				entity.vel.x < 0
+				&& entity.pos.x - entity.offset.x < match.x2
+			) {
+				entity.pos.x = match.x2 + entity.offset.x
+				entity.vel.x = 0
+				console.log('checkX2: ', match.x2, entity.pos.x)
+			}
+		})
+	}
+
 	checkY(entity) {
+		let y;
+		if (entity.vel.y > 0) {
+			y = entity.pos.y + entity.size.y - entity.offset.y
+		} else if (entity.vel.y < 0) {
+			y = entity.pos.y - entity.offset.y
+		} else {
+			return
+		}
+
 		const matches = this.tiles.searchByRange(
 			entity.pos.x, entity.pos.x + entity.size.x,
-			entity.pos.y, entity.pos.y + entity.size.y
+			y, y
 		)
 
 		matches.map(match => {
@@ -21,21 +70,20 @@ export default class TileCollider {
 			) {
 				entity.pos.y = match.y1 + entity.size.y
 				entity.vel.y = 0
-				console.log('checkY1 is true')
 			}
 
 			if (
 				entity.vel.y < 0
-				&& entity.pos.y - entity.offset.y + entity.pos.y <= match.y2
+				&& entity.pos.y - entity.offset.y + entity.pos.y < match.y2
 			) {
 				entity.pos.y = match.y2 - entity.offset.y
 				entity.vel.y = 0
-				console.log('checkY2 is true')
 			}
 		})
 	}
 
 	test(entity) {
 		this.checkY(entity)
+		this.checkX(entity)
 	}
 }

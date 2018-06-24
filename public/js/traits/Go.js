@@ -5,7 +5,7 @@ export default class Go extends Trait {
 		super('go')
 
 		this.direction = { x: 0, y: 0 }
-		this.speed = 2000
+		this.speed = 4000
 		this.velocity = 0
 
 		this.goingTo = {

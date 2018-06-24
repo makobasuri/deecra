@@ -18,6 +18,11 @@ export const tileCollider = new TileCollider(STATE.tiles)
 export function updateEntities(deltaTime) {
 	STATE.entities.map(entity => {
 		entity.update(deltaTime)
-		tileCollider.test(entity)
+
+		entity.pos.x += entity.vel.x * deltaTime
+		tileCollider.checkX(entity)
+
+		entity.pos.y += entity.vel.y * deltaTime
+		tileCollider.checkY(entity)
 	})
 }
