@@ -8,7 +8,7 @@ export function createCharacter() {
 
 		char.addTrait(new Go())
 		char.draw = function drawChar(context) {
-			sprite.draw('idle', context, this.pos.x, this.pos.y)
+			sprite.draw('idle', context, 0, 0)
 		}
 
 		return char;

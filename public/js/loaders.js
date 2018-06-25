@@ -14,9 +14,11 @@ export function loadTileset(url) {
 
 function createTiles(STATE, backgrounds) {
 	backgrounds.map(
-		background => background.ranges.map(([x1, x2, y1, y2]) => {
-			for (let x = x1; x < x2; x++) {
-				for (let y = y1; y < y2; y++) {
+		background => background.ranges.map(([xStart, xLength, yStart, yLength]) => {
+			const xEnd = xStart + xLength
+			const yEnd = yStart + yLength
+			for (let x = xStart; x < xEnd; x++) {
+				for (let y = yStart; y < yEnd; y++) {
 					STATE.tiles.set(x, y, {
 						name: background.tile
 					});

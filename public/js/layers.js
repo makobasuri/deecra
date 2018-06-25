@@ -1,27 +1,44 @@
 import STATE, { tileCollider } from './STATE.js'
 import {createBuffer} from './buffer.js'
 
-export function drawLayers(context) {
-	STATE.layers.map(layer => layer(context))
+export function drawLayers(camera, context) {
+	STATE.layers.map(layer => layer(camera, context))
 }
 
-export function createSpriteLayer(entities) {
+export function createSpriteLayer(entities, width = 64, height = 64) {
+	const spriteBuffer = createBuffer(width, height)
+	const spriteBufferCtx = spriteBuffer.getContext('2d')
+
 	return function drawSpriteLayer(context) {
-		entities.map(entity => entity.draw(context))
+		entities.map(entity => {
+			spriteBufferCtx.clearRect(0, 0, width, height)
+
+			entity.draw(spriteBufferCtx)
+
+			context.drawImage(
+				spriteBuffer,
+				entity.pos.x - camera.pos.x,
+				entity.pos.y - camera.pos.y
+			)
+		})
 	}
 }
 
 export function createBgLayer(STATE, sprites) {
-	const bgBuffer = createBuffer(300, 200);
+	const bgBuffer = createBuffer(2000, 1400);
 
 	STATE.tiles.each(
-		(tile, x, y) => sprites.drawTile(
-			tile.name, bgBuffer.getContext('2d'), x, y
-		)
+		(tile, x, y) => {
+			sprites.drawTile(
+				tile.name, bgBuffer.getContext('2d'), x, y
+			)
+
+			console.log(tile, x, y)
+		}
 	)
 
-	return function drawBackgroundLayer(context) {
-		context.drawImage(bgBuffer, 0, 0)
+	return function drawBackgroundLayer(context, camera) {
+		context.drawImage(bgBuffer, -camera.pos.x, -camera.pos.y)
 	}
 }
 
@@ -36,11 +53,15 @@ export function createCollisionLayer(STATE) {
 		return getByIndexOriginal.call(tileResolver, x, y)
 	}
 
-	return function drawCollision(context) {
+	return function drawCollision(context, camera) {
 		resolvedTiles.map(({x, y}) => {
 			context.strokeStyle = 'blue'
 			context.beginPath()
-			context.rect(x * tileSize, y * tileSize, tileSize, tileSize)
+			context.rect(
+				x * tileSize - camera.pos.x,
+				y * tileSize - camera.pos.y,
+				tileSize, tileSize
+			)
 			context.stroke()
 		})
 
@@ -48,8 +69,8 @@ export function createCollisionLayer(STATE) {
 			context.strokeStyle = 'red'
 			context.beginPath()
 			context.rect(
-				entity.pos.x + entity.offset.x,
-				entity.pos.y + entity.offset.y,
+				entity.pos.x + entity.offset.x - camera.pos.x,
+				entity.pos.y + entity.offset.y - camera.pos.y,
 				entity.size.x, entity.size.y
 			)
 			context.stroke()
