@@ -6,7 +6,13 @@ export default class Go extends Trait {
 
 		this.direction = { x: 0, y: 0 }
 		this.speed = 4000
-		this.velocity = 0
+
+		this.distance = {
+			left: 0,
+			right: 0,
+			up: 0,
+			down: 0
+		}
 
 		this.goingTo = {
 			left: false,
@@ -30,6 +36,7 @@ export default class Go extends Trait {
 
 	cancel(direction) {
 		this.goingTo[direction] = !this.goingTo[direction]
+		this.distance[direction] = 0
 	}
 
 	update(entity, deltaTime) {
@@ -43,6 +50,19 @@ export default class Go extends Trait {
 			entity.vel.y = this.speed * this.direction.y * deltaTime
 		} else {
 			entity.vel.y = 0
+		}
+
+		if (this.goingTo.left) {
+			this.distance.left += -entity.vel.x * deltaTime
+		}
+		if (this.goingTo.right) {
+			this.distance.right += entity.vel.x * deltaTime
+		}
+		if (this.goingTo.up) {
+			this.distance.up += -entity.vel.y * deltaTime
+		}
+		if (this.goingTo.down) {
+			this.distance.down += entity.vel.y * deltaTime
 		}
 	}
 }

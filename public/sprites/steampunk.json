@@ -1,0 +1,71 @@
+{
+	"imageURL": "/tiles/characters/steampunk_f10.png",
+	"tileW": 27,
+	"tileH": 44,
+	"frames": [
+		{
+			"name": "go-left-0",
+			"rect": [1, 48, 27, 44]
+		},
+		{
+			"name": "go-left-1",
+			"rect": [32, 48, 27, 44]
+		},
+		{
+			"name": "go-left-2",
+			"rect": [1, 48, 27, 44]
+		},
+		{
+			"name": "go-left-3",
+			"rect": [97, 48, 27, 44]
+		},
+		{
+			"name": "go-right-0",
+			"rect": [1, 96, 27, 44]
+		},
+		{
+			"name": "go-right-1",
+			"rect": [32, 96, 27, 44]
+		},
+		{
+			"name": "go-right-2",
+			"rect": [1, 96, 27, 44]
+		},
+		{
+			"name": "go-right-3",
+			"rect": [97, 96, 27, 44]
+		},
+		{
+			"name": "go-up-0",
+			"rect": [1, 146, 27, 44]
+		},
+		{
+			"name": "go-up-1",
+			"rect": [32, 146, 27, 44]
+		},
+		{
+			"name": "go-up-2",
+			"rect": [1, 146, 27, 44]
+		},
+		{
+			"name": "go-up-3",
+			"rect": [97, 146, 27, 44]
+		},
+		{
+			"name": "go-down-0",
+			"rect": [1, 0, 27, 44]
+		},
+		{
+			"name": "go-down-1",
+			"rect": [32, 1, 27, 44]
+		},
+		{
+			"name": "go-down-2",
+			"rect": [1, 0, 27, 44]
+		},
+		{
+			"name": "go-down-3",
+			"rect": [97, 1, 27, 44]
+		}
+	]
+}

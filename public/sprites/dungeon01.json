@@ -1,0 +1,15 @@
+{
+	"imageURL": "/tiles/DungeonCrawl_ProjectUtumnoTileset.png",
+	"tileW": 32,
+	"tileH": 32,
+	"tiles": [
+		{
+			"name": "ground-stone",
+			"index": [22, 13]
+		},
+		{
+			"name": "wall-stone",
+			"index": [23, 16]
+		}
+	]
+}

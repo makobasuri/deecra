@@ -25,20 +25,35 @@ export function createSpriteLayer(entities, width = 64, height = 64) {
 }
 
 export function createBgLayer(STATE, sprites) {
-	const bgBuffer = createBuffer(2000, 1400);
+	const bgBuffer = createBuffer(2000, 1400)
+	const bgCtx = bgBuffer.getContext('2d')
+	const tiles = STATE.tiles
 
-	STATE.tiles.each(
-		(tile, x, y) => {
-			sprites.drawTile(
-				tile.name, bgBuffer.getContext('2d'), x, y
-			)
-
-			console.log(tile, x, y)
+	let startIndex, endIndex
+	function redraw(drawFrom, drawTo) {
+		if (drawFrom === startIndex && drawTo === endIndex) {
+			return
 		}
-	)
+
+		startIndex = drawFrom
+		endIndex = drawTo
+
+		for (let x = startIndex; x <= endIndex; ++x) {
+			const col = tiles.grid[x]
+			if (col) {
+				col.map((tile, y) => sprites.drawTile(
+					tile.name, bgCtx, x - startIndex, y
+				))
+			}
+		}
+	}
 
 	return function drawBackgroundLayer(context, camera) {
-		context.drawImage(bgBuffer, -camera.pos.x, -camera.pos.y)
+		const drawWidth = Math.floor(camera.size.x / 32)
+		const drawFrom = Math.floor(camera.pos.x / 32)
+		const drawTo = drawFrom + drawWidth
+		redraw(drawFrom, drawTo)
+		context.drawImage(bgBuffer, -camera.pos.x % 32, -camera.pos.y)
 	}
 }
 
@@ -77,5 +92,18 @@ export function createCollisionLayer(STATE) {
 		})
 
 		resolvedTiles.length = 0
+	}
+}
+
+export function createCameraLayer(cameraToDraw) {
+	return function drawCameraRect(context, fromCamera) {
+		context.strokeStyle = 'purple'
+		context.beginPath()
+		context.rect(
+			cameraToDraw.pos.x - fromCamera.pos.x,
+			cameraToDraw.pos.y - fromCamera.pos.y,
+			cameraToDraw.size.x, cameraToDraw.size.y
+		)
+		context.stroke()
 	}
 }

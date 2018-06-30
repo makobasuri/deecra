@@ -4,7 +4,7 @@ import { setupKeyboard } from './controls/setupKeyboard.js'
 import { updateEntities } from './STATE.js'
 import { createCharacter } from './entities.js'
 import { loadLevel } from './loaders.js';
-import { drawLayers } from './layers.js'
+import { drawLayers, createCameraLayer } from './layers.js'
 import { createMouseControl } from './controls/mouseControl.js'
 
 const canvas = document.getElementById('canvas');
@@ -25,6 +25,8 @@ Promise.all([
 	char.pos.set(164, 40)
 	char.size.set(27, 32)
 	char.offset.set(0, 12)
+
+	STATE.layers.push(createCameraLayer(camera))
 
 	const input = setupKeyboard(char)
 	input.listenTo(window)

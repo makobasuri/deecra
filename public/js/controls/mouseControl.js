@@ -17,10 +17,10 @@ export function createMouseControl(canvas, entity, camera) {
 				&& lastEvent.buttons === 2
 				&& lastEvent.type === 'mousemove'
 			) {
-				camera.pos.x = event.offsetX - lastEvent.offsetX
-				camera.pos.y = event.offsetY - lastEvent.offsetY
-
-				console.log(camera.pos.x)
+				camera.pos.set(
+					event.offsetX - lastEvent.offsetX,
+					event.offsetY - lastEvent.offsetY
+				)
 			}
 			lastEvent = event
 		})
