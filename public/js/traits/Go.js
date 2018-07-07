@@ -21,6 +21,9 @@ export default class Go extends Trait {
 			down: false
 		}
 
+		this.stopped = null;
+		this.stopDirection = null;
+
 		this.directions = {
 			left: 	{ x: -1, 	y: 0 },
 			right: 	{ x: 1, 	y: 0 },
@@ -30,13 +33,16 @@ export default class Go extends Trait {
 	}
 
 	start(direction) {
+		this.stopped = false
 		this.goingTo[direction] = !this.goingTo[direction]
 		this.direction = this.directions[direction]
 	}
 
 	cancel(direction) {
+		this.stopped = true
 		this.goingTo[direction] = !this.goingTo[direction]
 		this.distance[direction] = 0
+		this.stopDirection = direction
 	}
 
 	update(entity, deltaTime) {

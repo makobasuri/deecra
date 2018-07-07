@@ -33,6 +33,9 @@ export function createCharacter() {
 				const frameIndex = Math.floor(char.go.distance.down / 10) % frames.down.length
 				return frames.down[frameIndex]
 			}
+			if (char.go.stopped) {
+				return frames[char.go.stopDirection][0]
+			}
 			return 'go-down-0';
 		}
 
