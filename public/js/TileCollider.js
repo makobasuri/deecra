@@ -46,9 +46,10 @@ export default class TileCollider {
 	}
 
 	checkY(entity) {
-		let y;
+		let y
+
 		if (entity.vel.y > 0) {
-			y = entity.pos.y + entity.size.y - entity.offset.y
+			y = entity.pos.y + entity.size.y
 		} else if (entity.vel.y < 0) {
 			y = entity.pos.y - entity.offset.y
 		} else {
@@ -57,7 +58,7 @@ export default class TileCollider {
 
 		const matches = this.tiles.searchByRange(
 			entity.pos.x, entity.pos.x + entity.size.x,
-			y, y
+			y, y + entity.offset.y + entity.size.y
 		)
 
 		matches.map(match => {
@@ -66,15 +67,15 @@ export default class TileCollider {
 
 			if (
 				entity.vel.y > 0
-				&& entity.pos.y - entity.offset.y > match.y1
+				&& entity.pos.y + entity.size.y + entity.offset.y > match.y1
 			) {
-				entity.pos.y = match.y1 + entity.size.y
+				entity.pos.y = match.y1 - entity.size.y - entity.offset.y
 				entity.vel.y = 0
 			}
 
 			if (
 				entity.vel.y < 0
-				&& entity.pos.y - entity.offset.y + entity.pos.y < match.y2
+				&& entity.pos.y + entity.offset.y < match.y2
 			) {
 				entity.pos.y = match.y2 - entity.offset.y
 				entity.vel.y = 0
