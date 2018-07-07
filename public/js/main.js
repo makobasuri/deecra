@@ -10,6 +10,9 @@ import { createMouseControl } from './controls/mouseControl.js'
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
+const canvasMidX = canvas.width / 2;
+const canvasMidY = canvas.height / 2;
+
 Promise.all([
 	createCharacter(),
 	loadLevel('dungeon-1')
@@ -22,7 +25,7 @@ Promise.all([
 	window.camera = camera
 
 	STATE.addEntity(char)
-	char.pos.set(164, 40)
+	char.pos.set(150, 150)
 	char.size.set(27, 32)
 	char.offset.set(0, 12)
 
@@ -38,6 +41,8 @@ Promise.all([
 	timer.update = function update(deltaTime) {
 		updateEntities(deltaTime)
 		drawLayers(ctx, camera)
+		camera.pos.x = char.pos.x + char.size.x / 2 - canvasMidX
+		camera.pos.y = char.pos.y + char.size.y / 2 - canvasMidY
 	}
 
 	timer.start()

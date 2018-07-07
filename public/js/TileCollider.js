@@ -31,7 +31,6 @@ export default class TileCollider {
 			) {
 				entity.pos.x = match.x1 - entity.size.x
 				entity.vel.x = 0
-				console.log('checkX1: ', match.x1, entity.pos.x)
 			}
 
 			if (
@@ -40,7 +39,6 @@ export default class TileCollider {
 			) {
 				entity.pos.x = match.x2 + entity.offset.x
 				entity.vel.x = 0
-				console.log('checkX2: ', match.x2, entity.pos.x)
 			}
 		})
 	}

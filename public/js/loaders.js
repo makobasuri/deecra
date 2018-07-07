@@ -24,7 +24,6 @@ export function loadSpriteSheet(name) {
 			loadTileset(sheetSpec.imageURL)
 		]))
 		.then(([sheetSpec, image]) => {
-			console.log(sheetSpec, image)
 			const sprites = new SpriteSheet(
 				image, sheetSpec.tileW, sheetSpec.tileH
 			)
