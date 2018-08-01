@@ -104,3 +104,33 @@ export function loadLevel(name) {
 			return STATE
 		})
 }
+
+export function loadTiledMap(tiledMap) {
+	return loadJSON(`/tiles/${tiledMap}.json`)
+		.then(levelSpec => Promise.all([
+			levelSpec,
+			levelSpec.tilesets.map(tileset => loadTileset(`/tiles/${tileset.image}`))
+		]))
+		.then(([levelSpec, ...images]) => {
+			const rows = new Array(levelSpec.height)
+			const matrix = rows.map(row => row.push(new Array(levelSpec.width)))
+
+			const layers = levelSpec.layers
+			const layersData = layers.map(layer => layer.data)
+
+			layersData.map(layerData => layerData.map(point => {
+				for (let rowsI = 0; rowsI < levelSpec.height; rowsI+
+				+) { // TODO: fix
+					for (let colsI = 0; colsI < levelSpec.width; colsI++) {
+						console.log('wat')
+					}
+				}
+
+				console.log(point)
+			}))
+			console.log(rows, matrix)
+
+		})
+}
+
+loadTiledMap('mymap')
